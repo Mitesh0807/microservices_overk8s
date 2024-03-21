@@ -1,9 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
 import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
-import { UserRolesEnum, AvailableSocialLogins } from '@app/comman';
+import {
+  UserRolesEnum,
+  AvailableSocialLogins,
+  AbstractDocument,
+} from '@app/comman';
 @Schema({ timestamps: true })
-export class User extends Document {
+export class UserDocument extends AbstractDocument {
   @Prop({
     type: {
       url: { type: String },
@@ -73,4 +76,4 @@ export class User extends Document {
   emailVerificationExpiry: Date;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const UserSchema = SchemaFactory.createForClass(UserDocument);
