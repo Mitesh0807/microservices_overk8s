@@ -9,7 +9,7 @@ steps:
         'apps/auth/Dockerfile',
         '.',
       ]
-  - name: 'auth'
+  - name: 'gcr.io/cloud-builders/docker'
     args: [
         'push',
         'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/prodction',
