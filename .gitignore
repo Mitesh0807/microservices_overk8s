@@ -2,7 +2,7 @@
 **/dist
 **/node_modules
 /build
-
+microservices-key.json
 # Logs
 logs
 *.log

@@ -4,7 +4,7 @@ steps:
     args: [
         'build',
         '-t',
-        'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/prodction',
+        'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production',
         '-f',
         'apps/auth/Dockerfile',
         '.',
@@ -12,5 +12,5 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
         'push',
-        'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/prodction',
+        'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production',
       ]
