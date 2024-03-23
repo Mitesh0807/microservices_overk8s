@@ -10,14 +10,14 @@ COPY nest-cli.json nest-cli.json
 
 RUN npm install -g pnpm
 
-RUN pnpm -r install 
+RUN pnpm install 
 #remove dist folder
 RUN rm -rf dist
 COPY apps/auth apps/auth
 COPY libs libs
 
 RUN cd apps/auth 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install 
 
 RUN pnpm run build auth
 
