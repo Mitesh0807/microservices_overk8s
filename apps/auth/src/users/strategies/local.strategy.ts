@@ -11,7 +11,7 @@ export class LocalStategy extends PassportStrategy(Strategy) {
 
   async validate(email: string, password: string) {
     try {
-      // return await this.usersService.verifyUser(email, password);
+      return await this.usersService.verifyUser(email, password);
     } catch (err) {
       throw new UnauthorizedException(err);
     }

@@ -1,14 +1,37 @@
+# services:
+#   auth: 
+#     build: 
+#       context: .
+#       dockerfile: ./apps/auth/Dockerfile
+#       target: development
+#     command: pnpm run start:dev auth
+#     env_file: ./apps/auth/.env
+#     ports:
+#       - 3001:3001 
+#     volumes:
+#       - .:/usr/src/app
+#   mongo:
+#     image: mongo
+
+version: '3'
+
 services:
-  auth: 
-    build: 
+  auth:
+    build:
       context: .
       dockerfile: ./apps/auth/Dockerfile
       target: development
-    command: pnpm run start:dev auth
+    command: sh -c "pnpm install --prefix apps/auth && pnpm run start:dev auth"
     env_file: ./apps/auth/.env
     ports:
-      - 3001:3001 
+      - 3001:3001
     volumes:
       - .:/usr/src/app
+    depends_on:
+      - mongo
+
   mongo:
     image: mongo
+
+volumes:
+  node_modules:

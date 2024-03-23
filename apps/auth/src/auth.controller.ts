@@ -5,7 +5,7 @@ import { CurrentUser, UserDocument } from '@app/comman';
 import { Response } from 'express';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Get()
   getHello(): string {

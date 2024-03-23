@@ -10,15 +10,13 @@ COPY nest-cli.json nest-cli.json
 
 RUN npm install -g pnpm
 
-RUN pnpm install 
-#remove dist folder
-RUN rm -rf dist
+RUN pnpm  install
+
+COPY apps/auth/package.json /usr/src/app/apps/auth/
+RUN pnpm install --prefix /usr/src/app/apps/auth
+
 COPY apps/auth apps/auth
 COPY libs libs
-
-RUN cd apps/auth 
-RUN pnpm install 
-
 RUN pnpm run build auth
 
 FROM node:alpine AS production
