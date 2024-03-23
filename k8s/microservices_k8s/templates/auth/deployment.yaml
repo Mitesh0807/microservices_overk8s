@@ -15,7 +15,15 @@ spec:
         app: auth
     spec:
       containers:
-      - image: asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production
-        name: production
-        ports:
-          - containerPort: 3001
+        - image: asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production
+          name: production
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
+            - name: JWT_EXPIRATION
+              value: "100000"
+          ports:
+            - containerPort: 3001
