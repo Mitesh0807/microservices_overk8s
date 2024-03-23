@@ -17,6 +17,7 @@ export class UserDocument extends AbstractDocument {
       localPath: '',
     },
   })
+  @IsOptional()
   avatar: { url: string; localPath: string };
 
   @Prop({
@@ -58,6 +59,7 @@ export class UserDocument extends AbstractDocument {
   loginType?: string;
 
   @Prop({ default: false })
+  @IsOptional()
   isEmailVerified: boolean;
 
   @Prop()

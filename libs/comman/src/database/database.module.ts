@@ -5,13 +5,11 @@ import { ConfigService } from '@nestjs/config';
   imports: [
     MongooseModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
-        uri: configService.get('DATABASE_URL'),
+        uri: configService.get('MONGODB_URI'),
       }),
       inject: [ConfigService],
     }),
   ],
-  providers: [],
-  exports: [],
 })
 export class DatabaseModule {
   static forFeature(models: ModelDefinition[]) {

@@ -28,6 +28,9 @@ devDependencies:
   '@types/bcryptjs':
     specifier: ^2.4.6
     version: 2.4.6
+  '@types/express':
+    specifier: ^4.17.17
+    version: 4.17.21
   '@types/passport':
     specifier: ^1.0.16
     version: 1.0.16
