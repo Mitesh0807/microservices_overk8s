@@ -9,9 +9,9 @@ export class AuthService {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
   getHello(): string {
-    return 'Hello Test Auto deploy!';
+    return 'Hello Test Auto deploy is it working!';
   }
 
   async login(user: UserDocument, response: Response) {
