@@ -21,9 +21,14 @@ spec:
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
-                  name: jwt-secret
+                  name: jwt-key
                   key: JWT_SECRET
             - name: JWT_EXPIRATION
               value: "100000"
+            - name : MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGODB_URI
           ports:
             - containerPort: 3001
