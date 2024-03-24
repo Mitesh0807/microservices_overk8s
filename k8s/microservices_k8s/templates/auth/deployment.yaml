@@ -18,7 +18,7 @@ spec:
         - image: asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production
           name: production
           env:
-            - name: JWT_KEY
+            - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
                   name: jwt-key
