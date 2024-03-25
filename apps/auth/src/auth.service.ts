@@ -1,10 +1,9 @@
-import { MAILING_SERVICE, UserDocument } from '@app/comman';
-import { Inject, Injectable } from '@nestjs/common';
+import { UserDocument } from '@app/comman';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Response } from 'express';
 import { TokenPayload } from './users/dto/get-user.dto';
-import { ClientProxy } from '@nestjs/microservices';
 @Injectable()
 export class AuthService {
   constructor(

@@ -14,20 +14,3 @@ steps:
         'push',
         'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production',
       ]
-
-  #Mailing
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-        'build',
-        '-t',
-        'asia-south1-docker.pkg.dev/microservices-k8s-417906/mailing/production',
-        '-f',
-        'apps/mailing/Dockerfile',
-        '.',
-      ]
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [
-        'push',
-        'asia-south1-docker.pkg.dev/microservices-k8s-417906/mailing/production',
-      ]
-
