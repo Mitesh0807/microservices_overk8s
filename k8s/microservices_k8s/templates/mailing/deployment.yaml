@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mailing
+  name: mailing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mailing
+  template:
+    metadata:
+      labels:
+        app: mailing
+    spec:
+      containers:
+        - image: asia-south1-docker.pkg.dev/microservices-k8s-417906/mailing/production
+          name: production
+          env:
+           - name: PORT 
+             value: '3002'
+           - name: SMTP_USER
+             valueFrom:
+               secretKeyRef:
+                 name: mailing
+                 key: SMTP_USER
+           - name : GOOGLE_OAUTH_CLIENT_ID
+             valueFrom:
+               secretKeyRef:
+                 name: mailing
+                 key: GOOGLE_OAUTH_CLIENT_ID
+           - name : GOOGLE_OAUTH_CLIENT_SECRET
+             valueFrom:
+               secretKeyRef:
+                 name: mailing
+                 key: GOOGLE_OAUTH_CLIENT_SECRET
+           - name : GOOGLE_OAUTH_REFRESH_TOKEN
+             valueFrom:
+               secretKeyRef:
+                 name: mailing
+                 key: GOOGLE_OAUTH_REFRESH_TOKEN
+          ports:
+            - containerPort: 3002
+
