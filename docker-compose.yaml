@@ -27,11 +27,19 @@ services:
       - 3001:3001
     volumes:
       - .:/usr/src/app
-    depends_on:
-      - mongo
+  mailing:
+    build:
+      context: . 
+      dockerfile: ./apps/mailing/Dockerfile
+      target: development
+    command: sh -c "pnpm install --prefix apps/mailing && pnpm run start:dev mailing"
+    env_file: ./apps/mailing/.env
+    ports:
+      - 3002:3002
+    volumes:
+      - .:/usr/src/app
+  # mongo:
+  #   image: mongo
 
-  mongo:
-    image: mongo
-
-volumes:
-  node_modules:
+# volumes:
+#   node_modules:

@@ -75,7 +75,7 @@ export class UserDocument extends AbstractDocument {
   emailVerificationToken: string;
 
   @Prop()
-  emailVerificationExpiry: Date;
+  emailVerificationExpiry: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserDocument);
