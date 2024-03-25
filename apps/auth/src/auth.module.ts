@@ -38,7 +38,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           },
         }),
         inject: [ConfigService],
-      }
+      },
     ]),
     UsersModule,
     HealthModule,
@@ -46,4 +46,4 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, LocalStategy],
 })
-export class AuthModule { }
+export class AuthModule {}

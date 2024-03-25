@@ -5,11 +5,12 @@ import { Request as ExpressRequest } from 'express';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async createUser(@Body() createUserDto: CreateUserDto,
-    @Request() Request: ExpressRequest
+  async createUser(
+    @Body() createUserDto: CreateUserDto,
+    @Request() Request: ExpressRequest,
   ) {
     return this.usersService.create(createUserDto, Request);
   }

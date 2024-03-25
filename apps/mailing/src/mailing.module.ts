@@ -20,4 +20,4 @@ import { LoggerModule } from '@app/comman';
   controllers: [MailingController],
   providers: [MailingService],
 })
-export class MailingModule {  }
+export class MailingModule {}
