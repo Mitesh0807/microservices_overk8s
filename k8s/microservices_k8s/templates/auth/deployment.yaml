@@ -34,5 +34,7 @@ spec:
               value: 'mailing'
             - name : MAILING_PORT
               value: '3002'
+            - name: PORT
+              value: '3001'
           ports:
             - containerPort: 3001

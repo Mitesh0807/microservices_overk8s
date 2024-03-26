@@ -20,6 +20,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         JWT_EXPIRATION: Joi.string().required(),
         MAILING_HOST: Joi.string().required(),
         MAILING_PORT: Joi.number().required(),
+        PORT: Joi.number().required(),
       }),
     }),
     JwtModule.registerAsync({
@@ -50,4 +51,4 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, LocalStategy],
 })
-export class AuthModule {}
+export class AuthModule { }

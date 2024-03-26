@@ -37,7 +37,7 @@ export class AuthService {
     return token;
   }
 
-  async verifyEmail(token: string, requestObj: ExpressRequest) {
+  async verifyEmail(token: string, requestObj: ExpressRequest, response: Response) {
     const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
     const user = await this.usersService.findOne(
       {
@@ -52,10 +52,11 @@ export class AuthService {
     user.emailVerificationToken = null;
     user.emailVerificationExpiry = null;
     await this.usersService.update(user._id.toHexString(), user);
+    // will redirectUrl to login page when frontend is ready
     const redirectUrl =
       requestObj.protocol + '://' + requestObj.get('host')
         ? requestObj.get('host') + '/auth/login'
         : `localhost:${this.configService.get('PORT')}` + '/auth/login';
-    return redirectUrl;
+    return response.redirect(redirectUrl);
   }
 }

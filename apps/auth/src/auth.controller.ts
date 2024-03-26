@@ -13,7 +13,7 @@ import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './users/guards/local-auth.guard';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Get()
   getHello(): string {
@@ -34,7 +34,8 @@ export class AuthController {
   async verifyEmail(
     @Param('token') token: string,
     @Req() Request: ExpressRequest,
+    @Res() response: Response
   ) {
-    return await this.authService.verifyEmail(token, Request);
+    return await this.authService.verifyEmail(token, Request, response);
   }
 }
