@@ -4,6 +4,8 @@ metadata:
   labels:
     app: auth
   name: auth-http
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
     - name: 'http'
