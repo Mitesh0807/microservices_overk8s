@@ -13,9 +13,9 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
-  ) {}
+  ) { }
   getHello(): string {
-    return 'Hello Test Auto deploy is it working!';
+    return 'Hello Test Auto deploy is it M';
   }
 
   async login(user: UserDocument, response: Response) {
