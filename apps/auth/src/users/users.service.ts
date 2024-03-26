@@ -8,12 +8,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import {
   MAILING_SERVICE,
   USER_TEMPORARY_TOKEN_EXPIRY,
+  UserDocument,
   UserRolesEnum,
 } from '@app/comman';
 import * as bcrypt from 'bcryptjs';
 import * as crypto from 'crypto';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
+import { FilterQuery } from 'mongoose';
 
 @Injectable()
 export class UsersService {
@@ -26,7 +28,7 @@ export class UsersService {
     await this.validateCreateUserDto(createUserDto);
     const { unHashedToken, hashedToken, tokenExpiry } =
       await this.generateTemporaryToken();
-    const url = `${Request.protocol}://${Request.get('host')}/auth/verify-email?token=${unHashedToken}`;
+    const url = `${Request.protocol}://${Request.get('host')}/auth/verify-email/${unHashedToken}`;
     this.mailingService.emit('mail_notify', {
       email: createUserDto.email,
       subject: 'Verify Email',
@@ -89,5 +91,16 @@ export class UsersService {
       throw new UnprocessableEntityException('Invalid credentials');
     }
     return user;
+  }
+
+  async findOne(
+    filter: FilterQuery<UserDocument>,
+    notFoundExceptionMessage?: string,
+  ) {
+    return this.usersRepository.findOne(filter, notFoundExceptionMessage);
+  }
+
+  async update(id: string, updateUserDto: Partial<UserDocument>) {
+    return this.usersRepository.findOneAndUpdate({ _id: id }, updateUserDto);
   }
 }

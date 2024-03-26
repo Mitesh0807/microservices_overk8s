@@ -1,8 +1,16 @@
-import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import { CurrentUser, UserDocument } from '@app/comman';
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
+import { Response, Request as ExpressRequest } from 'express';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './users/guards/local-auth.guard';
-import { CurrentUser, UserDocument } from '@app/comman';
-import { Response } from 'express';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -20,5 +28,13 @@ export class AuthController {
   ) {
     const jwt = await this.authService.login(user, response);
     return user;
+  }
+
+  @Get('verify-email/:token')
+  async verifyEmail(
+    @Param('token') token: string,
+    @Req() Request: ExpressRequest,
+  ) {
+    return await this.authService.verifyEmail(token, Request);
   }
 }

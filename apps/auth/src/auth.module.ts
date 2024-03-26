@@ -16,6 +16,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       isGlobal: true,
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION: Joi.string().required(),
+        MAILING_HOST: Joi.string().required(),
+        MAILING_PORT: Joi.number().required(),
       }),
     }),
     JwtModule.registerAsync({

@@ -9,6 +9,6 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.useLogger(app.get(Logger));
-  await app.listen(3001);
+  await app.listen(configService.get('PORT'));
 }
 bootstrap();

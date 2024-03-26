@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as nodemailer from 'nodemailer';
-import { NotifyEmailDto } from './dto/mailing.dto';
 @Injectable()
 export class MailingService {
   constructor(private readonly configService: ConfigService) {}
@@ -25,7 +24,6 @@ export class MailingService {
     subject: string;
     html: string;
   }) {
-    console.log( email, subject, html , " is it working");
     await this.transporter.sendMail({
       from: this.configService.get('SMTP_USER'),
       to: email,
