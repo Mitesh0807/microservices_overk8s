@@ -30,5 +30,9 @@ spec:
                 secretKeyRef:
                   name: mongodb
                   key: MONGODB_URI
+            - name : MAILING_HOST
+              value: 'mailing'
+            - name : MAILING_PORT
+              value: '3002'
           ports:
             - containerPort: 3001

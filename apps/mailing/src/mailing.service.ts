@@ -25,6 +25,7 @@ export class MailingService {
     subject: string;
     html: string;
   }) {
+    console.log( email, subject, html , " is it working");
     await this.transporter.sendMail({
       from: this.configService.get('SMTP_USER'),
       to: email,

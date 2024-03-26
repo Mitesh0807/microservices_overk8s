@@ -27,11 +27,6 @@ export class AuthService {
     );
 
     const token = this.jwtService.sign(tokenPayload);
-    this.mailingService.emit('mail_notify',{
-      email: user.email,
-      subject: 'Verify Email',
-      html: `<a href="http://localhost:3000/auth/verify-email?token=${token}">Click here to verify your email</a>`,
-    })
     response.cookie('Authentication', token, {
       httpOnly: true,
       expires,
