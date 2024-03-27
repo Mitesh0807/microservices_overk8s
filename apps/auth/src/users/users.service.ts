@@ -16,13 +16,14 @@ import * as crypto from 'crypto';
 import { ClientProxy } from '@nestjs/microservices';
 import { Request } from 'express';
 import { FilterQuery } from 'mongoose';
+import { GetUserDto } from './dto/get-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
     @Inject(MAILING_SERVICE) private readonly mailingService: ClientProxy,
-  ) {}
+  ) { }
 
   async create(createUserDto: CreateUserDto, Request: Request) {
     await this.validateCreateUserDto(createUserDto);
@@ -32,7 +33,12 @@ export class UsersService {
     this.mailingService.emit('mail_notify', {
       email: createUserDto.email,
       subject: 'Verify Email',
-      html: `<a href="${url}">Click here to verify your email</a>`,
+      html: `
+              <h1 style=" text-align: center" >Verify Email</h1>
+              <p>Verify your email address to continue for full access</p>
+              <p>${createUserDto.email} email address</p>
+              <a href="${url}">Click here to verify your email</a>
+              `,
     });
     return this.usersRepository.create({
       ...createUserDto,
@@ -40,7 +46,7 @@ export class UsersService {
       password: await bcrypt.hash(createUserDto.password, 10),
       refreshToken: 'testing',
       forgotPasswordToken: 'testing',
-      forgotPasswordExpiry: new Date(),
+      forgotPasswordExpiry: null,
       emailVerificationToken: hashedToken,
       emailVerificationExpiry: tokenExpiry,
       avatar: {
@@ -65,7 +71,7 @@ export class UsersService {
     throw new UnprocessableEntityException('Email already exists.');
   }
 
-  private async generateTemporaryToken() {
+  async generateTemporaryToken() {
     const unHashedToken = crypto.randomBytes(32).toString('hex');
     const hashedToken = crypto
       .createHash('sha256')
@@ -77,6 +83,9 @@ export class UsersService {
       hashedToken,
       tokenExpiry,
     };
+  }
+  async getUser(_id: GetUserDto) {
+    return this.usersRepository.findOne(_id);
   }
 
   async verifyUser(email: string, password: string) {
@@ -90,6 +99,16 @@ export class UsersService {
     if (!isPasswordMatch) {
       throw new UnprocessableEntityException('Invalid credentials');
     }
+    if (!user.isEmailVerified) {
+      throw new UnprocessableEntityException('Email not verified');
+    }
+    delete user.password;
+    delete user.forgotPasswordToken;
+    delete user.forgotPasswordExpiry;
+    delete user.emailVerificationToken;
+    delete user.emailVerificationExpiry;
+    delete user.refreshToken;
+    delete user.isEmailVerified;
     return user;
   }
 
@@ -97,7 +116,7 @@ export class UsersService {
     filter: FilterQuery<UserDocument>,
     notFoundExceptionMessage?: string,
   ) {
-    return this.usersRepository.findOne(filter, notFoundExceptionMessage);
+    return this.usersRepository.findOne(filter, [], notFoundExceptionMessage);
   }
 
   async update(id: string, updateUserDto: Partial<UserDocument>) {

@@ -69,7 +69,7 @@ export class UserDocument extends AbstractDocument {
   forgotPasswordToken: string;
 
   @Prop()
-  forgotPasswordExpiry: Date;
+  forgotPasswordExpiry: number;
 
   @Prop()
   emailVerificationToken: string;
