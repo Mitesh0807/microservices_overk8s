@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { TokenPayload } from '../interfaces/token-payload.interface';
 import { UsersService } from '../users.service';
+import { Request } from 'express';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
@@ -12,12 +13,15 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
-        (request: any) => {
-          return (
-            request?.cookies?.Authentication ||
-            request?.Authentication ||
-            request?.headers?.Authentication
-          );
+        (request: Request) => {
+          const cookies = request.cookies;
+          const accessToken = cookies.accessToken;
+          if (!accessToken) {
+            throw new UnauthorizedException(
+              'No access token in cookies please redirect to login',
+            );
+          }
+          return accessToken;
         },
       ]),
       ignoreExpiration: false,
@@ -26,6 +30,18 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   async validate(payload: TokenPayload) {
-    return this.usersSerivce.getUser({ _id: payload.userId });
+    try {
+      return this.usersSerivce.getUser({ _id: payload.userId });
+    } catch (error) {
+      if (
+        error?.name === 'TokenExpiredError' ||
+        error?.name === 'JsonWebTokenError'
+      ) {
+        throw new UnauthorizedException(
+          'Access token expired please refresh accessToken',
+        );
+      }
+      throw new UnauthorizedException(error);
+    }
   }
 }

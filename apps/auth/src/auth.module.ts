@@ -9,6 +9,7 @@ import { JwtStrategy } from './users/strategies/jwt.strategy';
 import { LocalStategy } from './users/strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RefreshJwtStrategy } from './users/strategies/refresh-jwt.strategy';
 @Module({
   imports: [
     LoggerModule,
@@ -21,17 +22,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         MAILING_HOST: Joi.string().required(),
         MAILING_PORT: Joi.number().required(),
         PORT: Joi.number().required(),
+        JWT_REFRESH_SECRET: Joi.string().required(),
       }),
     }),
-    JwtModule.registerAsync({
-      useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
-        signOptions: {
-          expiresIn: `${configService.get('JWT_EXPIRATION')}s`,
-        },
-      }),
-      inject: [ConfigService],
-    }),
+    JwtModule.register({}),
     ClientsModule.registerAsync([
       {
         name: MAILING_SERVICE,
@@ -49,6 +43,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     HealthModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, LocalStategy],
+  providers: [AuthService, JwtStrategy, LocalStategy, RefreshJwtStrategy],
 })
 export class AuthModule {}

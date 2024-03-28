@@ -15,6 +15,7 @@ import { AuthService } from './auth.service';
 import { ChangePasswordDto } from './users/dto/change-password.dto';
 import { JwtAuthGuard } from './users/guards/jwt-auth.guard';
 import { LocalAuthGuard } from './users/guards/local-auth.guard';
+import { RefreshJwtTokenGuard } from './users/guards/refresh-jwt-token.guard';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -99,5 +100,14 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     return await this.authService.logout(user, response);
+  }
+
+  @UseGuards(RefreshJwtTokenGuard)
+  @Get('refresh-token')
+  async refreshToken(
+    @CurrentUser() user: UserDocument,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return await this.authService.refreshToken(user, response);
   }
 }

@@ -16,7 +16,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
     @Inject(MAILING_SERVICE) private readonly mailingService: ClientProxy,
-  ) { }
+  ) {}
   getHello(): string {
     return 'Hello Test Auto deploy is it M';
   }
@@ -30,11 +30,33 @@ export class AuthService {
     expires.setSeconds(
       expires.getSeconds() + this.configService.get('JWT_EXPIRATION'),
     );
-
-    const token = this.jwtService.sign(tokenPayload);
-    response.cookie('Authentication', token, {
+    const refreshTokenExpiry = new Date();
+    refreshTokenExpiry.setSeconds(
+      refreshTokenExpiry.getSeconds() +
+        this.configService.get('JWT_REFRESH_EXPIRATION'),
+    );
+    // switch to access token and refresh token
+    const refreshToken = this.jwtService.sign(tokenPayload, {
+      secret: this.configService.get('JWT_REFRESH_SECRET'),
+    });
+    const accessToken = this.jwtService.sign(tokenPayload, {
+      secret: this.configService.get('JWT_SECRET'),
+    });
+    // const token = this.jwtService.sign(tokenPayload);
+    // response.cookie('Authentication', token, {
+    //   httpOnly: true,
+    //   expires,
+    // });
+    response.cookie('accessToken', accessToken, {
       httpOnly: true,
       expires,
+    });
+    response.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      expires: refreshTokenExpiry,
+    });
+    await this.usersService.update(user._id.toHexString(), {
+      refreshToken,
     });
     return user;
   }
@@ -170,12 +192,36 @@ export class AuthService {
       secure: true,
     };
 
-    response.clearCookie('accessToken', options)
+    response
+      .clearCookie('accessToken', options)
       .clearCookie('refreshToken', options)
-      .clearCookie("Authentication", options)
+      .clearCookie('Authentication', options);
     return {
       sucess: true,
-      message: 'Logged out successfully'
+      message: 'Logged out successfully',
+    };
+  }
+
+  async refreshToken(user: UserDocument, response: Response) {
+    const expires = new Date();
+    expires.setSeconds(
+      expires.getSeconds() + this.configService.get<number>('JWT_EXPIRATION'),
+    );
+    const accessToken = this.jwtService.sign(
+      {
+        userId: user._id,
+      },
+      {
+        secret: this.configService.get('JWT_SECRET'),
+      },
+    );
+    response.cookie('accessToken', accessToken, {
+      expires,
+      httpOnly: true,
+    });
+    return {
+      sucess: true,
+      message: 'Logged in successfully',
     };
   }
 }

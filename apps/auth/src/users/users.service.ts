@@ -23,7 +23,7 @@ export class UsersService {
   constructor(
     private readonly usersRepository: UsersRepository,
     @Inject(MAILING_SERVICE) private readonly mailingService: ClientProxy,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto, Request: Request) {
     await this.validateCreateUserDto(createUserDto);
@@ -44,7 +44,7 @@ export class UsersService {
       ...createUserDto,
       role: UserRolesEnum.USER,
       password: await bcrypt.hash(createUserDto.password, 10),
-      refreshToken: 'testing',
+      refreshToken: null,
       forgotPasswordToken: 'testing',
       forgotPasswordExpiry: null,
       emailVerificationToken: hashedToken,
