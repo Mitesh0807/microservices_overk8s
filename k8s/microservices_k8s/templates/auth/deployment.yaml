@@ -24,7 +24,7 @@ spec:
                   name: jwt-key
                   key: JWT_SECRET
             - name: JWT_EXPIRATION
-              value: "100000"
+              value: "3600"
             - name : MONGODB_URI
               valueFrom:
                 secretKeyRef:
@@ -36,5 +36,12 @@ spec:
               value: '3002'
             - name: PORT
               value: '3001'
+            - name: JWT_REFRESH_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-key
+                  key: JWT_REFRESH_SECRET
+            - name : JWT_REFRESH_EXPIRATION
+              value: "86400"
           ports:
             - containerPort: 3001
