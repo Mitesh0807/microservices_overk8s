@@ -13,5 +13,5 @@ spec:
       protocol: TCP
       targetPort: 3004
   selector:
-    app: auth
+    app: public
   type: NodePort
