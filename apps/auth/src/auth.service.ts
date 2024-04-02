@@ -16,7 +16,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
     @Inject(MAILING_SERVICE) private readonly mailingService: ClientProxy,
-  ) { }
+  ) {}
   getHello(): string {
     return 'Hello Test Auto deploy is it M';
   }
@@ -27,13 +27,14 @@ export class AuthService {
     };
     const expires = new Date();
     expires.setSeconds(
-      expires.getSeconds() + Number(this.configService.get<number>('JWT_EXPIRATION'))
+      expires.getSeconds() +
+        Number(this.configService.get<number>('JWT_EXPIRATION')),
     );
-    console.log(expires, " expires")
+    console.log(expires, ' expires');
     const refreshTokenExpiry = new Date();
     refreshTokenExpiry.setSeconds(
       refreshTokenExpiry.getSeconds() +
-      Number(this.configService.get('JWT_REFRESH_EXPIRATION')),
+        Number(this.configService.get('JWT_REFRESH_EXPIRATION')),
     );
     const refreshToken = this.jwtService.sign(tokenPayload, {
       secret: this.configService.get('JWT_REFRESH_SECRET'),
@@ -199,7 +200,8 @@ export class AuthService {
   async refreshToken(user: UserDocument, response: Response) {
     const expires = new Date();
     expires.setSeconds(
-      expires.getSeconds() + Number(this.configService.get<number>('JWT_EXPIRATION')),
+      expires.getSeconds() +
+        Number(this.configService.get<number>('JWT_EXPIRATION')),
     );
     const accessToken = this.jwtService.sign(
       {

@@ -1,13 +1,13 @@
 # services:
-#   auth: 
-#     build: 
+#   auth:
+#     build:
 #       context: .
 #       dockerfile: ./apps/auth/Dockerfile
 #       target: development
 #     command: pnpm run start:dev auth
 #     env_file: ./apps/auth/.env
 #     ports:
-#       - 3001:3001 
+#       - 3001:3001
 #     volumes:
 #       - .:/usr/src/app
 #   mongo:
@@ -29,7 +29,7 @@ services:
       - .:/usr/src/app
   mailing:
     build:
-      context: . 
+      context: .
       dockerfile: ./apps/mailing/Dockerfile
       target: development
     command: sh -c "pnpm install --prefix apps/mailing && pnpm run start:dev mailing"
@@ -38,8 +38,18 @@ services:
       - 3002:3002
     volumes:
       - .:/usr/src/app
+  public:
+    build:
+      context: .
+      dockerfile: ./apps/public/Dockerfile
+      target: development
+    command: sh -c  "pnpm run start:dev public"
+    env_file: ./apps/public/.env
+    ports:
+      - 3004:3004
+    volumes:
+      - .:/usr/src/app
   # mongo:
   #   image: mongo
-
 # volumes:
 #   node_modules:

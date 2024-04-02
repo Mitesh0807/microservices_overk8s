@@ -37,6 +37,15 @@
         ],
         "watchAssets": true
       }
+    },
+    "public": {
+      "type": "application",
+      "root": "apps/public",
+      "entryFile": "main",
+      "sourceRoot": "apps/public/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/public/tsconfig.app.json"
+      }
     }
   },
   "monorepo": true,
