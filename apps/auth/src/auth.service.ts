@@ -94,11 +94,11 @@ export class AuthService {
       email: user.email,
       subject: 'Verify Email',
       html: `
-              <h1 style=" text-align: center" >Verify Email</h1>
-              <p>Verify your email address to continue for full access</p>
-              <p>${user.email} email address</p>
-              <a href="${url}">Click here to verify your email</a>
-              `,
+<h1 style=" text-align: center" >Verify Email</h1>
+<p>Verify your email address to continue for full access</p>
+<p>${user.email} email address</p>
+<a href="${url}">Click here to verify your email</a>
+`,
     });
     return unHashedToken;
   }
@@ -146,11 +146,11 @@ export class AuthService {
       email: user.email,
       subject: 'Reset Password',
       html: `
-              <h1 style=" text-align: center" >Reset Password</h1>
-              <p>Reset your password to continue for full access</p>
-              <p>${user.email} email address</p>
-              <a href="${url}">Click here to reset your password</a>
-              `,
+<h1 style=" text-align: center" >Reset Password</h1>
+<p>Reset your password to continue for full access</p>
+<p>${user.email} email address</p>
+<a href="${url}">Click here to reset your password</a>
+`,
     });
     return response.redirect(`mailto:${user.email}`);
   }

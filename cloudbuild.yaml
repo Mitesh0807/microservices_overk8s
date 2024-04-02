@@ -1,7 +1,8 @@
 steps:
   #Auth
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
+    args:
+      [
         'build',
         '-t',
         'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production',
@@ -10,14 +11,16 @@ steps:
         '.',
       ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
+    args:
+      [
         'push',
         'asia-south1-docker.pkg.dev/microservices-k8s-417906/auth/production',
       ]
 
   #Mailing
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
+    args:
+      [
         'build',
         '-t',
         'asia-south1-docker.pkg.dev/microservices-k8s-417906/mailing/production',
@@ -26,8 +29,26 @@ steps:
         '.',
       ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: [
+    args:
+      [
         'push',
         'asia-south1-docker.pkg.dev/microservices-k8s-417906/mailing/production',
       ]
 
+  #Public
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'asia-south1-docker.pkg.dev/microservices-k8s-417906/public/production',
+        '-f',
+        'apps/public/Dockerfile',
+        '.',
+      ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'asia-south1-docker.pkg.dev/microservices-k8s-417906/public/production',
+      ]
