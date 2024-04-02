@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { BooksModule } from './books/books.module';
 import * as Joi from 'joi';
 import { HealthModule, LoggerModule } from '@app/comman';
+import { CatsModule } from './cats/cats.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +17,7 @@ import { HealthModule, LoggerModule } from '@app/comman';
     BooksModule,
     LoggerModule,
     HealthModule,
+    CatsModule,
   ],
   controllers: [PublicController],
   providers: [PublicService],

@@ -5,7 +5,6 @@ import { filterObjectKeys, getPaginatedPayload } from '@app/comman';
 @Injectable()
 export class BooksService {
   async getBooks(req: Request) {
-    console.log(req?.query);
     const page = +(req?.query?.page || 1);
     const limit = +(req?.query?.limit || 10);
     let query: string;
@@ -72,7 +71,6 @@ export class BooksService {
 
   async getARandomBook() {
     const randomIndex = Math.floor(Math.random() * booksJson.length);
-    console.log('Testin');
     const book = booksJson[randomIndex];
     if (!book) {
       throw new NotFoundException('Book aa does not exist.');
