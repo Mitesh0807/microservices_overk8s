@@ -4,12 +4,19 @@ metadata:
   name: freeapi
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: auth-http
-            port:
-              number: 3001
+    - http:
+        paths:
+          - path: /auth/*
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-http
+                port:
+                  number: 3001
+          - path: /public/*
+            pathType: Prefix
+            backend:
+              service:
+                name: public-http
+                port:
+                  number: 3004

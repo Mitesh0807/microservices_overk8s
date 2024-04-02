@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: public
+  name: public
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: public
+  template:
+    metadata:
+      labels:
+        app: public
+    spec:
+      containers:
+        - image: asia-south1-docker.pkg.dev/microservices-k8s-417906/public/production
+          name: production
+          env:
+            - name: PORT
+              value: '3004'
+          ports:
+            - containerPort: 3004
