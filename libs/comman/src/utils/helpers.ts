@@ -1,36 +1,24 @@
 import fs from 'fs';
 import { Request } from 'express';
 
-// interface Book {
-//   id: number;
-//   name: string;
-//   email: string;
-//   phone: string;
-// }
-
 export const filterObjectKeys = <T extends Record<string, unknown>>(
-  fieldsArray: Array<keyof T & string>,
+  fieldsArray: string[],
   objectArray: T[],
-): T[] => {
+): Partial<T>[] => {
   const filteredArray = objectArray.map((originalObj) => {
     const obj: Partial<T> = {};
-    fieldsArray.forEach((field) => {
-      if (field.trim() in originalObj) {
-        obj[field] = originalObj[field];
+    let found = false;
+    Object.keys(originalObj).forEach((key) => {
+      if (fieldsArray.includes(key)) {
+        obj[key as keyof T] = originalObj[key as keyof T];
+        found = true;
       }
     });
-    if (Object.keys(obj).length > 0) return obj as T;
-    return originalObj;
+    return obj;
   });
   return filteredArray;
 };
 
-/**
- * @param {Book[]} dataArray
- * @param {number} page
- * @param {number} limit
- * @returns {{previousPage: string | null, currentPage: string, nextPage: string | null, data: Book[]}}
- */
 export const getPaginatedPayload = <T extends object>(
   dataArray: T[],
   page: number,

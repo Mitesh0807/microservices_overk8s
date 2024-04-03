@@ -7,22 +7,15 @@ export class CatsService {
   getCats(req: Request) {
     const page = +(req?.query?.page || 1);
     const limit = +(req?.query?.limit || 10);
-
     let query: string;
     let inc: Array<keyof (typeof catsJson)[0]>;
     if (typeof req?.query?.query === 'string' && req?.query?.query) {
       query = req.query.query.toLowerCase();
     }
     if (req?.query?.inc && typeof req?.query?.inc === 'string') {
-      const incArray = req.query.inc.split(',');
-      const incKeys = Object.keys(catsJson[0]);
-      const isValidKeys = incArray.every((i) => incKeys.includes(i));
-      // if (!isValidKeys) {
-      //   throw new NotFoundException('Invalid inc keys');
-      // }
       inc = req.query.inc.split(',') as Array<keyof (typeof catsJson)[0]>;
     }
-
+    console.log(inc, 'inc');
     let catsArray = query
       ? catsJson.filter((cat) => {
           return (
