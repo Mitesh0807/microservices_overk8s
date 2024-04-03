@@ -14,6 +14,7 @@ export class BooksService {
     }
     if (req?.query?.inc && typeof req?.query?.inc === 'string') {
       inc = req.query.inc.split(',') as Array<keyof (typeof booksJson)[0]>;
+      inc = inc.map((i) => i.trim() as keyof (typeof booksJson)[0]);
     }
     const booksArray = query
       ? booksJson.filter((book) => {
@@ -24,10 +25,11 @@ export class BooksService {
           );
         })
       : booksJson;
-    inc = inc.map((i) => i.trim() as keyof (typeof booksJson)[0]);
-    const updatedBooks = filterObjectKeys(inc, booksArray);
-    const response = getPaginatedPayload(updatedBooks, page, limit);
-    return response;
+    const paginatedBooks = getPaginatedPayload(booksArray, page, limit);
+    const updatedBooks = inc
+      ? filterObjectKeys(inc, paginatedBooks.data)
+      : paginatedBooks.data;
+    return { ...paginatedBooks, data: updatedBooks };
   }
 
   async getBookById(bookId: string) {

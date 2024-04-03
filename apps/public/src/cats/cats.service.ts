@@ -23,8 +23,11 @@ export class CatsService {
           );
         })
       : catsJson;
-    const filterdCats = filterObjectKeys(inc, catsArray);
-    return getPaginatedPayload(filterdCats, page, limit);
+    const paginatedCats = getPaginatedPayload(catsArray, page, limit);
+    const filterdCats = inc
+      ? filterObjectKeys(inc, paginatedCats.data)
+      : paginatedCats.data;
+    return { ...paginatedCats, data: filterdCats };
   }
 
   getARandomCat() {

@@ -23,8 +23,11 @@ export class DogsService {
           );
         })
       : dogsJson;
-    const filterdDogs = filterObjectKeys(inc, dogsArray);
-    return getPaginatedPayload(filterdDogs, page, limit);
+    const paginatedDogs = getPaginatedPayload(dogsArray, page, limit);
+    const filterdDogs = inc
+      ? filterObjectKeys(inc, paginatedDogs.data)
+      : paginatedDogs.data;
+    return { ...paginatedDogs, data: filterdDogs };
   }
 
   getARandomDog() {

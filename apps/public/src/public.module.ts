@@ -7,6 +7,7 @@ import * as Joi from 'joi';
 import { HealthModule, LoggerModule } from '@app/comman';
 import { CatsModule } from './cats/cats.module';
 import { DogsModule } from './dogs/dogs.module';
+import { MealModule } from './meal/meal.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,6 +21,7 @@ import { DogsModule } from './dogs/dogs.module';
     HealthModule,
     CatsModule,
     DogsModule,
+    MealModule,
   ],
   controllers: [PublicController],
   providers: [PublicService],
