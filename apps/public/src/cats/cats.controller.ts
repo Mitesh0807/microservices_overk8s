@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Request } from '@nestjs/common';
-import { CatsService } from './cats.service';
 import { Request as ExpressRequest } from 'express';
+import { CatsService } from './cats.service';
 @Controller('public/cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
@@ -14,8 +14,8 @@ export class CatsController {
   async getARandomBook() {
     return this.catsService.getARandomCat();
   }
-  @Get(':bookId')
-  async getBookById(@Param('bookId') bookId: string) {
-    return this.catsService.getCatById(bookId);
+  @Get(':catId')
+  async getBookById(@Param('catId') catId: string) {
+    return this.catsService.getCatById(catId);
   }
 }

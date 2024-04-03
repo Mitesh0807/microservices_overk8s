@@ -7,11 +7,9 @@ export const filterObjectKeys = <T extends Record<string, unknown>>(
 ): Partial<T>[] => {
   const filteredArray = objectArray.map((originalObj) => {
     const obj: Partial<T> = {};
-    let found = false;
     Object.keys(originalObj).forEach((key) => {
       if (fieldsArray.includes(key)) {
         obj[key as keyof T] = originalObj[key as keyof T];
-        found = true;
       }
     });
     return obj;

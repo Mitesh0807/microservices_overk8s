@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Request } from 'express';
 import catsJson from '../../json/cats.json';
 import { filterObjectKeys, getPaginatedPayload } from '@app/comman';
@@ -15,8 +15,7 @@ export class CatsService {
     if (req?.query?.inc && typeof req?.query?.inc === 'string') {
       inc = req.query.inc.split(',') as Array<keyof (typeof catsJson)[0]>;
     }
-    console.log(inc, 'inc');
-    let catsArray = query
+    const catsArray = query
       ? catsJson.filter((cat) => {
           return (
             cat.name?.toLowerCase().includes(query) ||

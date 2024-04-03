@@ -15,7 +15,7 @@ export class BooksService {
     if (req?.query?.inc && typeof req?.query?.inc === 'string') {
       inc = req.query.inc.split(',') as Array<keyof (typeof booksJson)[0]>;
     }
-    let booksArray = query
+    const booksArray = query
       ? booksJson.filter((book) => {
           return (
             book.searchInfo?.textSnippet.toLowerCase().includes(query) ||
