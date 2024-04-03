@@ -10,6 +10,8 @@ import { DogsModule } from './dogs/dogs.module';
 import { MealModule } from './meal/meal.module';
 import { QuoteModule } from './quote/quote.module';
 import { RandomjokeModule } from './randomjoke/randomjoke.module';
+import { RandomProductModule } from './random-product/random-product.module';
+import { StockModule } from './stock/stock.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -26,6 +28,8 @@ import { RandomjokeModule } from './randomjoke/randomjoke.module';
     MealModule,
     QuoteModule,
     RandomjokeModule,
+    RandomProductModule,
+    StockModule,
   ],
   controllers: [PublicController],
   providers: [PublicService],
