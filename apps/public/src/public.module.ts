@@ -9,6 +9,7 @@ import { CatsModule } from './cats/cats.module';
 import { DogsModule } from './dogs/dogs.module';
 import { MealModule } from './meal/meal.module';
 import { QuoteModule } from './quote/quote.module';
+import { RandomjokeModule } from './randomjoke/randomjoke.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,6 +25,7 @@ import { QuoteModule } from './quote/quote.module';
     DogsModule,
     MealModule,
     QuoteModule,
+    RandomjokeModule,
   ],
   controllers: [PublicController],
   providers: [PublicService],
