@@ -8,6 +8,7 @@ import { HealthModule, LoggerModule } from '@app/comman';
 import { CatsModule } from './cats/cats.module';
 import { DogsModule } from './dogs/dogs.module';
 import { MealModule } from './meal/meal.module';
+import { QuoteModule } from './quote/quote.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -22,6 +23,7 @@ import { MealModule } from './meal/meal.module';
     CatsModule,
     DogsModule,
     MealModule,
+    QuoteModule,
   ],
   controllers: [PublicController],
   providers: [PublicService],
